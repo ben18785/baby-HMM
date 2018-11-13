@@ -1,0 +1,66 @@
+\documentclass[9pt]{article}
+\usepackage{amsmath}
+\title{Using hidden Markov models to analyse baby experiments}
+\author{Jelena Sucevic, Ben Lambert}
+\begin{document}
+\maketitle
+
+\section{Abstract}
+This document provides an overview of a approach to modelling baby experiments using hidden Markov models (HMMs). There are a number of benefits to this approach over existing ways of analysing data from experiments with babies. First the method provides rigour to the analysis of these experiments by defining a formal statistical model that describes the dynamics of participants' behaviour within an experiment. Second since baby data is notoriously noisy, HMMs can be used to filter the series and yield more robust estimates of quantities of interest. Finally this approach allows new quantities of interest to be estimated, for example concerning the dynamic attention of the baby, or the rate of switching between different learning modes.
+
+\section{Data}
+We have experimental data from 26 participants in an experiment used to determine ....[Sorry -- Jelena help me out here. You will be better at describing the experiment's aims than me!] This data involves three blocks of experiments, where each block is composed of two trials. Each trial lasts 10s, and in each `bin' eye-trackers measure the proportion of time spent looking at one of three objects: a `simple', `complex' or `neither'. The last case occurs when either the babies look at something else other than the objects or the eye-tracker fails to record the point of gaze.
+
+In this analysis we consider only the data in the first block, although recognise that the methods we propose would work similarly well for other blocks. Since the second trial within a single block occurs straight after the first we join the data from the two trials and analyse it as a single time series.
+
+\section{Model}
+\subsection{Description}
+The model we propose is a three-state HMM where the states correspond to the participant currently fixating on either the simple ($s$), complex ($c$) or neither ($n$) objects. At any given point in time the individual can switch states, where the probability of switching depends \textit{only} on the current state. In this way we can define a transition probability matrix,
+%
+\[
+\Theta = 
+\begin{bmatrix}
+\theta_{ss} & \theta_{sc} & \theta_{sn}\\
+\theta_{cs} & \theta_{cc} & \theta_{cn}\\
+\theta_{ns} & \theta_{nc} & \theta_{nn}
+\end{bmatrix},
+\]
+%
+where $\theta_{ij}$ is the probability of moving from state $i$ to state $j$. Note that the above matrix is not constrained to be symmetric since, for example, it is possible that the probability of moving from an $s$ state to a $c$ state is not the same as vice versa.
+
+In an HMM we do not know the underlying state of the individual at any given point in time, and so we use the observable data to estimate it. In our case this is determined by the amount of time $t_a\in[0,120]$ within a given bin $t$ that is spent fixing on a particular object $a\in\{s,c,n\}$, where we know that $t_s + t_c + t_n = 120$ since the participant's time must be spent looking at one of the objects.
+
+We do not pre-specify the threshold proportions of time spent fixating on each object under which the individual is deemed to be in each state. Instead we allow the data to in part (along with our priors, see below) determine these thresholds. We do this by assuming that, whilst an individual may concentrate on one particular object during the course of a bin, they may also somewhat randomly spend some time looking at the other objects. This randomness may be determined by either their inherent psychology, but also could be due to measurement error on behalf of the eye-tracker. 
+
+If the individual is in the $s$ state for bin $t$ then we assume that they will spend an amount of time,
+%
+\begin{equation}
+t_{s} \sim \mathcal{N}(\mu_{ss},\sigma_{ss}),
+\end{equation}
+%
+looking at state $s$, where $\mathcal{N}(.,.)$ is here a \textit{censored} normal that is constrained to lie between 0 and 120. Here $\mu_{ss}$ is the mean amount of time spent in state $s$ that the individual will look at object $s$, and $\sigma_{ss}$ is the standard deviation about that mean. However whilst being in state $s$ the individual may temporarily look elsewhere and spend an amount of time,
+%
+\begin{equation}
+t_c \sim \mathcal{N}(\mu_{sc},\sigma_{sc}),
+\end{equation} 
+%
+looking at object $c$. If we know both $t_s$ and $t_c$, then the amount of time spent looking at $n$ is  fully-known and is given by $t_n = 120 - t_s - t_c$, and so we only model $(t_s,t_c)$. In this model we assume that if an individual is in state $s$ that they will, on average, spend much more of their time looking at object $s$ than $c$, and so it is assumed that $\mu_{ss}>>\mu_{sc}$. 
+
+In order to use this desired design we use priors on the $\mu$ parameters that help guide the segmentation into the appropriate states. In particular we assume that in,
+%
+\begin{itemize}
+\item State $s$: $\mu_{ss}>>\mu_{sc}$, i.e. the individual spends longer looking at object $s$ opposed to $c$. 
+\item State $c$: $\mu_{cc}>>\mu_{cs}$, i.e. the individual spends longer looking at object $c$ opposed to $s$. 
+\item State $n$: $\mu_{ns}\sim \mu_{nc} \sim 0$, i.e. the individual spends very little time looking at objects $s$ or $c$ (implicitly spending much longer looking at $n$).
+\end{itemize}
+%
+\subsection{Motivation}
+An important reason for using the aforementioned model is that it provides a way of filtering the noisy data which results from these baby experiments. In particular this statistical model-based filtering is thought to be superior to rules of thumb where for example, if the baby spends more than 50\% of its time looking at an object $a\in\{s,c,n\}$ then it is said to be in that state. This is for a number of reasons. First by fitting an explicit model with latent states we are able to use the well-defined approach of Bayesian estimation to estimate the state at any given point in time. An additional benefit of using the Bayesian approach is that as well as the estimated states, we also obtain an uncertainty in any estimates. This information can then be used as a way to filter out any periods where there is significant uncertainty in the estimated state, leading to a cleaner representation of the underlying signal.
+
+Another reason for estimating an HMM is that this allows direct modelling of the dynamic behaviour of the participant throughout the course of the experiment. This fitted model can then be used to generate additional individual characteristics that could, for example, be used as additional explanatory or dependent variables. These include the various elements of the transition matrix $\Theta$, or the mean attention times $\mu_{ia}$ in state $i$ spent looking at object $a$. Also by fitting a statistical model to the data we are able to compare the fit across the individual participants, that could be used as a way of filtering particularly `noisy' participants.
+
+\subsection{Estimation}
+We use a Bayesian approach to estimate the model using Stan MCMC software. In each iteration the likelihood of the model is evaluated using the `forwards' algorithm, and by marginalising out the discrete states since Stan can only deal with continuous parameters. The model is run until convergence is obtained across four chains. The viterbi algorithm is used to extract the most likely sequence of states for each MCMC iteration.
+
+
+\end{document}

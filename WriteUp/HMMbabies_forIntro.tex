@@ -1,0 +1,131 @@
+\documentclass[a4paper,man,natbib]{apa6}
+
+\usepackage[english]{babel}
+\usepackage[utf8x]{inputenc}
+\usepackage{amsmath}
+\usepackage{graphicx}
+\usepackage[colorinlistoftodos]{todonotes}
+
+\title{Using hidden Markov models to analyse preferential looking data in infant experiments}
+\shorttitle{Your APA6-Style Manuscript}
+\author{Jelena Sucevic, Ben Lambert}
+\affiliation{University of Oxford}
+
+\abstract{Your abstract here.}
+
+\begin{document}
+\maketitle
+
+\section{Introduction}
+
+\subsection{Introduction outline}
+
+% \begin{enumerate}
+% \item Cognitive development in infancy - approaches
+% \item Looking preference procedure - Fagan and so on
+% \item  Novelty preference
+% \item  Cognitive models of novelty preference
+% \item  Standard analysis approach 
+% \item Limitations: overall summary measure, while attention preferences are dynamic in their nature
+% \item  Novel  complementary approach - based on HMM (individual differences?)
+% \end{enumerate}
+
+Exploring infants' looking behaviour has been a main tool for investigating cognitive development for more than five decades. In late fifties Robert Fantz (1958, 1961) established a novel method to investigate cognitive processes in infants - preferential looking paradigm. Minimal response demands and a wide range of potential application made preferential looking paradigm the most common method in infant research and an important methodological breakthroughs (Houston-Price, Nakai, 2004). Fantz (1961) designed a special "looking chamber" to explore infants' form perception. In the chamber, a baby was lying on her back while two pictures were presented above her. An experimenter recorded how much time she spent looking at each of the pictures. Preference for one of the stimuli was interpreted as an index of various perceptual, attentional or memory processes (add references, Houston-Price, Nakai, 2004).
+
+Since Fantz' initial studies, various adaptations of the preferential looking task have been developed. Once instance is an intermodal looking preference preference procedure. This task is one of the key tools in word learning experiments. Infants are typically presented with a pair (or several) pictures and and name of one of the depicted objects is played. If, upon naming, infants look more at the named picture, this preference is used as an indicator of word comprehension. 
+Another variant of the preferential looking task is a familiarisation - novelty preference task. Initial familiarisation phase in which infants are presented with a series of pictures (usually sequentially or in pairs) is followed by a test trial in which a pair of pictures is presented. If infants express more interest in one of the pictures, this preference is interpreted as an index of recognition. For instance, after being familiarised with a set of cats, when presented with a new cat and a dog - preference for the dog is interpreted as an evidence that infants recognise that novel cat is similar to the previously presented ones, i.e. they all belong the a category of cats.
+In all these tasks, looking preferences are used as an index of various cognitive processes. A key underlying assumption is that infants looking behaviour is driven by a novelty preference. The novelty preference is a tendency to find novel objects more interesting than familiar ones and thus more attention is directed towards the novel object. As pointed out by Houston-Price and Nakai (2004): "Differential attention to the contrasted stimuli in the preference method therefore allows researchers to draw two types of inference: that the stimuli have been discriminated, and that the direction of infants’ preferential attention reflects the relative salience of the stimuli for infants, where salience is determined by affective and physical properties of the stimuli, their familiarity or novelty, and their ‘fit’ or ‘misfit’ with cross-modal information."
+
+\subsection{What drives infants' looking preferences?}
+Novelty preference represents one of the main mechanisms driving infants behaviour. Sokolov's model of the orienting reflex (1963) is one of the widely accepted models for understanding novelty preference in infants. According to this model, an internal representation of the stimulus is being formed during familiarisation phase. In the subsequent test phase, two presented stimuli are compared to this internal model. Infants tend to direct more attention to the novel stimuli because it does not match with the internal model. As pointed out by Pascalis and De Haan (2003), this models provides a valuable explanation of novelty preference, but it provides no explanation for cases when infants, instead of novelty, express a preference for a familiar object.
+
+In studies exploring discrimination abilities any deviation from chance, either towards novel or familiar object, is an indicator that difference has been detected (HoustonPrice-Nakai, 2004). However, in certain cases, the direction of infants' looking preferences is crucial for interpretations (need to further clarify this).
+
+In addition to novelty and familiarity preference, infants can also express no preference for either of the test items. Some authors propose that this random looking behaviour should not be seen as a failure to discriminate, but instead as one of the stages in learning. Hunter and Ames' (1988) popular model of infants' attentional preferences proposes that initially infants will show an equal interest in both familiar and novel object. With more familiarisation experience, they will shift to familiarity preference and finally, after a sufficient amount of familiarisation, infants will express novelty preference ( Figure~\ref{fig:NovPref}). 
+Sophian (1980) proposes a different model in which no preference is a transition phase between initial familiarity and a final novelty preference phase (familiarity reflects incomplete encoding, whereas novelty preference results from a complete encoding of the stimulus). However, these models do not assume an effect of forgetting and how it would be expressed in looking preferences (Pascalis, de Haan, 2003). In addition, some studies find no null-preference stage in infants looking behaviour (Roder et al., 2000). Furthermore, some authors propose that "the “random preference” sometimes observed following the preference for familiarity in prior research %(see Rose et al., 1982; Wagner  Sakovits, 1986) 
+is probably an artifact of grouping data" (cf Roder et al., 2000).
+
+\begin{figure}
+\centering
+\includegraphics[width=0.8\textwidth]{Hunter_Ames_NoveltyPreferenceModel.png}
+\caption{\label{fig:NovPref}Hunter and Ames (1988) model of attentional preferences. - need to ask for copyrights}
+\end{figure}
+
+\subsection{Analysing preferential looking - a standard approach}
+A most common measure of novelty preference is a proportion of looking towards a novel item divided by the total amount of time accumulated for both novel and familiar item presented in a trial. This score is then compared to chance (0.5). T-tests or ANOVAs are usually used to formally test what is a probability that the observed deviation is accidental while there are no real differences.
+The overall preference score is shown to be a robust measure and considering the nature of infant data, it represent an important index of an overall performance in a task. However, there are several limitations this approach contains. Firstly, in order to perform these tests, there are certain assumptions that need to be met (data distribution, homoscedasticity...). In addition, the preference score represents an overall measure, a summary index of a looking behaviour expressed over the course of a trial (or several trials). As attentional preferences are dynamic in their nature (HustonPrice Nakai, 2004), using one summary index means that some important aspects of looking behaviour is not taken into an account.
+
+This approach provides the information about the general tendencies, whereas any information about potential individual differences is not considered. In some instances of novelty preference tasks, this might be of a particular interest. For instance, it has been shown that infants need various amount of familiarisation until they express novelty preference. Using fixed familiarisation regime (like in my study), it might be the case that when tested, infants might have been at different stages of the learning process. It is likely that at point when they enter the test phase, some infants have fully encoded information and thus will express novelty preference at test, whereas other infants at that point might have only partially encoded information and their behaviour will be driven by familiarity preference.  Therefore, it is important to take individual differences into an account, but only "a few attempts have actually been made to trace the shift in preference demonstrated by individual infants over time" (cf Roder et al., 2000).
+
+
+
+% \section{Some \LaTeX{} Examples}
+% \label{sec:examples}
+
+% \subsection{Sections}
+
+% Use section and subsection commands to organize your document. \LaTeX{} handles all the formatting and numbering automatically. Use ref and label commands for cross-references.
+
+% \subsection{Comments}
+
+% You can add inline TODO comments with the todonotes package, like this:
+% \todo[inline, color=green!40]{This is an inline comment.}
+
+% \subsection{References}
+
+% LaTeX automatically generates a bibliography in the APA style from your .bib file. The citep command generates a formatted citation in parentheses \citep{Lamport1986}. The cite command generates one without parentheses. LaTeX was first discovered by \cite{Lamport1986}.
+
+% \subsection{Tables and Figures}
+
+% Use the table and tabular commands for basic tables --- see Table~\ref{tab:widgets}, for example. You can upload a figure (JPEG, PNG or PDF) using the files menu. To include it in your document, use the includegraphics command as in the code for Figure~\ref{fig:frog} below.
+
+% % Commands to include a figure:
+% \begin{figure}
+% \centering
+% \includegraphics[width=0.5\textwidth]{frog.jpg}
+% \caption{\label{fig:frog}This is a figure caption.}
+% \end{figure}
+
+% \begin{table}
+% \centering
+% \begin{tabular}{l|r}
+% Item & Quantity \\\hline
+% Widgets & 42 \\
+% Gadgets & 13
+% \end{tabular}
+% \caption{\label{tab:widgets}An example table.}
+% \end{table}
+
+% \subsection{Mathematics}
+
+% \LaTeX{} is great at typesetting mathematics. Let $X_1, X_2, \ldots, X_n$ be a sequence of independent and identically distributed random variables with $\text{E}[X_i] = \mu$ and $\text{Var}[X_i] = \sigma^2 < \infty$, and let
+% $$S_n = \frac{X_1 + X_2 + \cdots + X_n}{n}
+%       = \frac{1}{n}\sum_{i}^{n} X_i$$
+% denote their mean. Then as $n$ approaches infinity, the random variables $\sqrt{n}(S_n - \mu)$ converge in distribution to a normal $\mathcal{N}(0, \sigma^2)$.
+
+% \subsection{Lists}
+
+% You can make lists with automatic numbering \dots
+
+% \begin{enumerate}
+% \item Like this,
+% \item and like this.
+% \end{enumerate}
+% \dots or bullet points \dots
+% \begin{itemize}
+% \item Like this,
+% \item and like this.
+% \end{itemize}
+
+% We hope you find write\LaTeX\ useful, and please let us know if you have any feedback using the help menu above.
+
+% \bibliography{example}
+
+\end{document}
+
+%
+% Please see the package documentation for more information
+% on the APA6 document class:
+%
+% http://www.ctan.org/pkg/apa6
+%
